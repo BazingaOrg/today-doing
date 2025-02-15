@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Input } from "@/components/ui/input";
 import { useTodoStore } from "@/lib/store";
 import { StatsDisplay } from "@/components/stats-display";
-import { Button } from "@/components/ui/button";
+import { UserNav } from "@/components/auth/user-nav";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -86,7 +86,10 @@ export function TopNavBar() {
                   )}
                 </AnimatePresence>
               </div>
-              <ThemeToggle />
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <UserNav />
+              </div>
             </div>
             <StatsDisplay />
           </div>
