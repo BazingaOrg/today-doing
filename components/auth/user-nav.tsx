@@ -24,11 +24,15 @@ export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+        <Button
+          variant="ghost"
+          className="relative w-9 h-9 rounded-full p-0 overflow-hidden"
+        >
           <img
             src={user.user_metadata.avatar_url}
             alt={user.user_metadata.full_name}
-            className="h-9 w-9 rounded-full"
+            className="w-full h-full object-cover"
+            style={{ aspectRatio: "1/1" }}
           />
         </Button>
       </DropdownMenuTrigger>

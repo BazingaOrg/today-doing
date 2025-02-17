@@ -1,6 +1,5 @@
 "use client";
 
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Input } from "@/components/ui/input";
 import { useTodoStore } from "@/lib/store";
 import { StatsDisplay } from "@/components/stats-display";
@@ -86,8 +85,7 @@ export function TopNavBar() {
                   )}
                 </AnimatePresence>
               </div>
-              <div className="flex items-center gap-2">
-                <ThemeToggle />
+              <div className="flex items-center">
                 <UserNav />
               </div>
             </div>

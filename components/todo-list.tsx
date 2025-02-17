@@ -6,10 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { TodoItem } from "@/components/todo-item";
 import { useToast } from "@/hooks/use-toast";
-import { Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type React from "react";
-import { format, isToday, isYesterday, isSameDay } from "date-fns";
+import { format, isToday, isYesterday } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { useNetworkStatus } from "@/hooks/use-network-status";
 
@@ -167,8 +166,12 @@ export function TodoList() {
       )}
 
       {error && (
-        <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-900 dark:text-red-100 rounded-md">
-          <p>加载待办事项时出现错误：{error}</p>
+        <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-900 dark:text-red-100 rounded-md space-y-2">
+          <p className="text-center">远程数据加载失败：{error}</p>
+          <p className="text-sm text-muted-foreground">
+            💡
+            别担心！您仍可以继续添加和管理待办事项，所有数据将安全地存储在本地。当网络恢复正常并成功登录后，系统会智能地帮您处理数据合并。
+          </p>
         </div>
       )}
 

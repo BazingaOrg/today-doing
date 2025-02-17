@@ -18,10 +18,42 @@ interface TodoItemProps {
   todo: Todo;
 }
 
+const renderTextWithLinks = (text: string) => {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    // 添加链接前的文本
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    // 添加链接
+    parts.push(
+      <a
+        key={match.index}
+        href={match[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative inline-block decoration-gray-300 dark:decoration-gray-600 before:absolute before:bottom-[-2px] before:left-0 before:h-[1px] before:w-full before:bg-gray-300 dark:before:bg-gray-600 before:transition-colors before:duration-500 after:absolute after:bottom-[-2px] after:left-0 after:h-[1px] after:w-0 after:bg-green-500 dark:after:bg-green-400 after:transition-all after:duration-500 hover:after:w-full"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {match[1]}
+      </a>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+  // 添加剩余的文本
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  return parts;
+};
+
 export function TodoItem({ todo }: TodoItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(todo.text);
-  const [isHovered, setIsHovered] = useState(false);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const { toggleTodo, updateTodo, deleteTodo, todos } = useTodoStore();
   const { toast } = useToast();
@@ -91,8 +123,6 @@ export function TodoItem({ todo }: TodoItemProps) {
           ? "bg-green-50 dark:bg-green-900/20 text-green-900 dark:text-green-100 border border-green-200 dark:border-green-800"
           : "bg-white dark:bg-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-800/70 border border-gray-200 dark:border-gray-700"
       )}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <motion.button
         type="button"
@@ -129,27 +159,27 @@ export function TodoItem({ todo }: TodoItemProps) {
       ) : (
         <span
           onDoubleClick={handleDoubleClick}
-          className={`flex-grow cursor-pointer pr-[88px] ${
+          className={`flex-grow cursor-pointer pr-[72px] break-words break-all ${
             todo.completed
               ? "line-through text-muted-foreground opacity-50"
               : ""
           }`}
         >
-          {todo.text}
+          {renderTextWithLinks(todo.text)}
         </span>
       )}
       <div className="absolute right-2 top-1/2 -translate-y-1/2">
         <AnimatePresence>
-          {isHovered && (
+          {!isEditing && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.15 }}
-              className="flex gap-1"
+              className="flex gap-0.5"
             >
               <motion.button
-                className="p-2 rounded-md hover:bg-transparent focus:outline-none"
+                className="p-1.5 rounded-md hover:bg-transparent focus:outline-none"
                 onClick={() => setIsEditing(true)}
                 whileHover={{
                   scale: 1.2,
@@ -162,7 +192,7 @@ export function TodoItem({ todo }: TodoItemProps) {
               <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
                 <PopoverTrigger asChild>
                   <motion.button
-                    className="p-2 rounded-md hover:bg-transparent focus:outline-none"
+                    className="p-1.5 rounded-md hover:bg-transparent focus:outline-none"
                     whileHover={{
                       scale: 1.2,
                       y: [0, -2, 2, -2, 0],
