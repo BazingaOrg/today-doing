@@ -12,6 +12,11 @@ import { format, isToday, isYesterday } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { useNetworkStatus } from "@/hooks/use-network-status";
 import { StatsDisplay } from "@/components/stats-display";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 
 type GroupedTodos = {
   [key: string]: Todo[];
@@ -20,6 +25,7 @@ type GroupedTodos = {
 export function TodoList() {
   const [newTodo, setNewTodo] = useState("");
   const [isInputExpanded, setIsInputExpanded] = useState(false);
+  const [openPopoverGroup, setOpenPopoverGroup] = useState<string | null>(null);
   const {
     todos,
     addTodo,
@@ -263,8 +269,85 @@ export function TodoList() {
             ({ group, todos }) =>
               todos.length > 0 && (
                 <div key={group} className="mt-8">
-                  <h2 className="text-lg font-semibold mb-4">
-                    {getGroupTitle(group)}
+                  <h2 className="text-lg font-semibold mb-4 flex items-center justify-between">
+                    <span>{getGroupTitle(group)}</span>
+                    <div
+                      className="flex items-center gap-2 cursor-pointer group"
+                      onMouseEnter={() => setOpenPopoverGroup(group)}
+                      onMouseLeave={() => setOpenPopoverGroup(null)}
+                    >
+                      <span className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors duration-200">
+                        {Math.round(
+                          (todos.filter((todo) => todo.completed).length /
+                            todos.length) *
+                            100
+                        )}
+                        %
+                      </span>
+                      <Popover open={openPopoverGroup === group}>
+                        <PopoverTrigger asChild>
+                          <div className="relative w-7 h-7">
+                            <svg className="w-7 h-7 transform -rotate-90">
+                              <circle
+                                className="text-muted/100 stroke-current"
+                                strokeWidth="3"
+                                fill="none"
+                                r="11"
+                                cx="14"
+                                cy="14"
+                              />
+                              <circle
+                                className="text-primary stroke-current transition-all duration-300 ease-in-out group-hover:opacity-100 opacity-70"
+                                strokeWidth="3"
+                                strokeLinecap="round"
+                                fill="none"
+                                r="11"
+                                cx="14"
+                                cy="14"
+                                strokeDasharray={`${
+                                  (todos.filter((todo) => todo.completed)
+                                    .length /
+                                    todos.length) *
+                                  69.115
+                                } 69.115`}
+                              />
+                            </svg>
+                          </div>
+                        </PopoverTrigger>
+                        <PopoverContent
+                          className="w-auto p-3"
+                          align="end"
+                          onPointerDownOutside={(e) => e.preventDefault()}
+                        >
+                          <div className="space-y-1 text-sm">
+                            <div className="flex items-center gap-2">
+                              <span className="text-muted-foreground">
+                                总计：
+                              </span>
+                              <span className="font-medium">
+                                {todos.length}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-muted-foreground">
+                                已办：
+                              </span>
+                              <span className="font-medium text-green-600 dark:text-green-400">
+                                {todos.filter((todo) => todo.completed).length}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-muted-foreground">
+                                未办：
+                              </span>
+                              <span className="font-medium text-orange-600 dark:text-orange-400">
+                                {todos.filter((todo) => !todo.completed).length}
+                              </span>
+                            </div>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                   </h2>
                   <div className="space-y-2">
                     <AnimatePresence initial={false}>
