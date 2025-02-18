@@ -11,6 +11,7 @@ import type React from "react";
 import { format, isToday, isYesterday } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { useNetworkStatus } from "@/hooks/use-network-status";
+import { StatsDisplay } from "@/components/stats-display";
 
 type GroupedTodos = {
   [key: string]: Todo[];
@@ -157,7 +158,7 @@ export function TodoList() {
   };
 
   return (
-    <div className="space-y-4 max-w-2xl mx-auto">
+    <div className="space-y-4 max-w-4xl mx-auto">
       {!isOnline && (
         <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-900 dark:text-yellow-100 rounded-md flex items-center gap-2">
           <span className="text-lg">📡</span>
@@ -181,6 +182,7 @@ export function TodoList() {
         </div>
       ) : (
         <>
+          <StatsDisplay />
           <AnimatePresence>
             {isInputExpanded ? (
               <motion.form

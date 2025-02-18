@@ -2,7 +2,6 @@
 
 import { Input } from "@/components/ui/input";
 import { useTodoStore } from "@/lib/store";
-import { StatsDisplay } from "@/components/stats-display";
 import { UserNav } from "@/components/auth/user-nav";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -37,9 +36,9 @@ export function TopNavBar() {
   return (
     <>
       <style jsx>{writingAnimation}</style>
-      <nav className="sticky top-0 z-10 bg-background border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="max-w-2xl mx-auto flex flex-col gap-4">
+      <nav className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b transition-colors duration-200">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 max-w-4xl">
+          <div className="w-full max-w-[min(calc(100vw-2rem),896px)] mx-auto flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold shrink-0">
                 <span className="animate-writing">📝</span>
@@ -89,7 +88,6 @@ export function TopNavBar() {
                 <UserNav />
               </div>
             </div>
-            <StatsDisplay />
           </div>
         </div>
       </nav>

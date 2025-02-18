@@ -1,5 +1,6 @@
 import { useTodoStore } from "@/lib/store";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
 export function StatsDisplay() {
   const todos = useTodoStore((state) => state.todos);
@@ -11,7 +12,12 @@ export function StatsDisplay() {
   const pendingTodos = totalTodos - completedTodos;
 
   return (
-    <div className="flex justify-center space-x-4 my-4">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="flex justify-center space-x-4 mb-4"
+    >
       <Badge
         variant="outline"
         className={`group px-3 py-1 cursor-pointer ${
@@ -54,6 +60,6 @@ export function StatsDisplay() {
         </span>
         <span className="font-medium">{pendingTodos}</span>
       </Badge>
-    </div>
+    </motion.div>
   );
 }
