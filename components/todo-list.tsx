@@ -100,6 +100,23 @@ export function TodoList() {
     });
   }, [groupedTodos]);
 
+  // 对每个分组内的待办事项进行排序
+  const sortedGroupTodos = useMemo(() => {
+    return sortedGroups.map(([group, groupTodos]) => ({
+      group,
+      todos: [...groupTodos].sort((a, b) => {
+        // 首先按完成状态排序
+        if (a.completed !== b.completed) {
+          return a.completed ? 1 : -1;
+        }
+        // 然后按创建时间排序
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      }),
+    }));
+  }, [sortedGroups]);
+
   const getGroupTitle = (group: string) => {
     switch (group) {
       case "today":
@@ -183,6 +200,7 @@ export function TodoList() {
       ) : (
         <>
           <StatsDisplay />
+
           <AnimatePresence>
             {isInputExpanded ? (
               <motion.form
@@ -241,17 +259,33 @@ export function TodoList() {
             )}
           </AnimatePresence>
 
-          {sortedGroups.map(
-            ([group, todos]) =>
+          {sortedGroupTodos.map(
+            ({ group, todos }) =>
               todos.length > 0 && (
                 <div key={group} className="mt-8">
                   <h2 className="text-lg font-semibold mb-4">
                     {getGroupTitle(group)}
                   </h2>
                   <div className="space-y-2">
-                    {todos.map((todo: Todo) => (
-                      <TodoItem key={todo.id} todo={todo} />
-                    ))}
+                    <AnimatePresence initial={false}>
+                      {todos.map((todo: Todo) => (
+                        <motion.div
+                          key={todo.id}
+                          layout
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -20 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 500,
+                            damping: 30,
+                            opacity: { duration: 0.2 },
+                          }}
+                        >
+                          <TodoItem todo={todo} />
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
                   </div>
                 </div>
               )

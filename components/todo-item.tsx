@@ -86,6 +86,11 @@ export function TodoItem({ todo }: TodoItemProps) {
         setEditedText(todo.text);
       } else {
         updateTodo(todo.id, trimmedText);
+        toast({
+          title: "✏️ 编辑成功",
+          description: "待办事项已编辑。",
+          variant: "success",
+        });
       }
     } else {
       setEditedText(todo.text);
@@ -105,6 +110,11 @@ export function TodoItem({ todo }: TodoItemProps) {
   const handleDelete = () => {
     deleteTodo(todo.id);
     setIsPopoverOpen(false);
+    toast({
+      title: "🗑️ 删除成功",
+      description: "✅ 待办事项已删除。",
+      variant: "success",
+    });
   };
 
   const handleToggle = () => {
