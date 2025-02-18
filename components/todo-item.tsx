@@ -79,7 +79,7 @@ export function TodoItem({ todo }: TodoItemProps) {
 
       if (isDuplicate) {
         toast({
-          title: "重复的待办事项",
+          title: "⚠️ 重复的待办事项",
           description: "此待办事项已存在于您的列表中。",
           variant: "destructive",
         });
@@ -87,8 +87,8 @@ export function TodoItem({ todo }: TodoItemProps) {
       } else {
         updateTodo(todo.id, trimmedText);
         toast({
-          title: "✏️ 编辑成功",
-          description: "待办事项已编辑。",
+          title: "✨ 编辑成功",
+          description: "✅ 待办事项已更新。",
           variant: "success",
         });
       }
@@ -111,7 +111,7 @@ export function TodoItem({ todo }: TodoItemProps) {
     deleteTodo(todo.id);
     setIsPopoverOpen(false);
     toast({
-      title: "🗑️ 删除成功",
+      title: "✨ 删除成功",
       description: "✅ 待办事项已删除。",
       variant: "success",
     });

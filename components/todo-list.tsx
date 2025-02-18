@@ -136,7 +136,7 @@ export function TodoList() {
       );
       if (isDuplicate) {
         toast({
-          title: "重复的待办事项",
+          title: "⚠️ 重复的待办事项",
           description: "此待办事项已存在于您的列表中。",
           variant: "destructive",
         });
@@ -146,13 +146,13 @@ export function TodoList() {
           await addTodo(newTodo.trim());
           setNewTodo("");
           toast({
-            title: "待办事项已添加",
-            description: "您的新待办事项已添加到列表中。",
+            title: "✨ 添加成功",
+            description: "✅ 新的待办事项已添加到列表中。",
             variant: "success",
           });
         } catch (error) {
           toast({
-            title: "添加失败",
+            title: "❌ 添加失败",
             description: "添加待办事项时出现错误，请重试。",
             variant: "destructive",
           });
