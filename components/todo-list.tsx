@@ -358,7 +358,7 @@ export function TodoList() {
           <Accordion
             type="single"
             collapsible
-            defaultValue="today"
+            defaultValue={sortedGroupTodos[0]?.group}
             className="space-y-4"
           >
             {sortedGroupTodos.map(
