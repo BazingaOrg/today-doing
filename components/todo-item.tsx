@@ -16,6 +16,13 @@ import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import { ConfettiCelebration } from "./confetti-celebration";
+import {
+  CheckCircle,
+  Circle,
+  Pencil,
+  Trash2,
+  AlertTriangle,
+} from "lucide-react";
 
 interface TodoItemProps {
   todo: Todo;
@@ -83,7 +90,7 @@ export function TodoItem({ todo }: TodoItemProps) {
 
       if (isDuplicate) {
         toast({
-          title: "⚠️ 重复的待办事项",
+          title: "重复的待办事项",
           description: "此待办事项已存在于您的列表中。",
           variant: "destructive",
         });
@@ -91,8 +98,8 @@ export function TodoItem({ todo }: TodoItemProps) {
       } else {
         updateTodo(todo.id, trimmedText);
         toast({
-          title: "✨ 编辑成功",
-          description: "✅ 待办事项已更新。",
+          title: "编辑成功",
+          description: "待办事项已更新。",
           variant: "success",
         });
       }
@@ -115,8 +122,8 @@ export function TodoItem({ todo }: TodoItemProps) {
     deleteTodo(todo.id);
     setIsPopoverOpen(false);
     toast({
-      title: "✨ 删除成功",
-      description: "✅ 待办事项已删除。",
+      title: "删除成功",
+      description: "待办事项已删除。",
       variant: "success",
     });
   };
@@ -162,9 +169,11 @@ export function TodoItem({ todo }: TodoItemProps) {
                 }
           }
         >
-          <span className="text-lg leading-none select-none">
-            {todo.completed ? "✅" : "⭕️"}
-          </span>
+          {todo.completed ? (
+            <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+          ) : (
+            <Circle className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+          )}
         </motion.button>
         {isEditing ? (
           <Input
@@ -208,9 +217,7 @@ export function TodoItem({ todo }: TodoItemProps) {
                       transition: { duration: 0.2 },
                     }}
                   >
-                    <span className="text-base leading-none select-none">
-                      ✏️
-                    </span>
+                    <Pencil className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                   </motion.button>
                   <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
                     <PopoverTrigger asChild>
@@ -222,9 +229,7 @@ export function TodoItem({ todo }: TodoItemProps) {
                           transition: { duration: 0.3 },
                         }}
                       >
-                        <span className="text-base leading-none select-none">
-                          🗑️
-                        </span>
+                        <Trash2 className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                       </motion.button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="end">

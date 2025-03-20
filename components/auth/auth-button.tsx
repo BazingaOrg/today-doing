@@ -11,6 +11,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
+import { UserRound, HandHelping } from "lucide-react";
 
 const loginProviders = [
   {
@@ -88,14 +89,14 @@ export function AuthButton() {
     <>
       <h1 className="text-2xl font-bold shrink-0">
         <span className="cursor-pointer" onClick={() => setShowDialog(true)}>
-          🧏🏻‍♂️
+          <UserRound className="h-6 w-6" />
         </span>
       </h1>
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent className="sm:max-w-[400px] w-[min(calc(100%-2rem),400px)] pt-8 rounded-lg border bg-card text-card-foreground shadow-lg">
           <motion.div className="absolute -top-7 left-1/2 -translate-x-1/2 text-4xl">
-            🙋🏻‍♂️
+            <HandHelping className="h-10 w-10" />
           </motion.div>
           <DialogHeader className="space-y-2">
             <DialogTitle className="text-center text-xl">

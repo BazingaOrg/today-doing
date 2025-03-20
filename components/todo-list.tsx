@@ -23,6 +23,16 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import {
+  CheckCircle,
+  AlertCircle,
+  XCircle,
+  Sparkles,
+  X,
+  Plus,
+  Wifi,
+  Lightbulb,
+} from "lucide-react";
 
 type GroupedTodos = {
   [key: string]: Todo[];
@@ -193,7 +203,7 @@ export function TodoList() {
       );
       if (isDuplicate) {
         toast({
-          title: "⚠️ 重复的待办事项",
+          title: "重复的待办事项",
           description: "此待办事项已存在于您的列表中。",
           variant: "destructive",
         });
@@ -203,13 +213,13 @@ export function TodoList() {
           await addTodo(newTodo.trim());
           setNewTodo("");
           toast({
-            title: "✨ 添加成功",
-            description: "✅ 新的待办事项已添加到列表中。",
+            title: "添加成功",
+            description: "新的待办事项已添加到列表中。",
             variant: "success",
           });
         } catch (error) {
           toast({
-            title: "❌ 添加失败",
+            title: "添加失败",
             description: "添加待办事项时出现错误，请重试。",
             variant: "destructive",
           });
@@ -274,7 +284,7 @@ export function TodoList() {
 
       {!isOnline && (
         <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-900 dark:text-yellow-100 rounded-md flex items-center gap-2">
-          <span className="text-lg">📡</span>
+          <Wifi className="h-5 w-5" />
           <p>当前处于离线模式，您的更改将在重新连接后自动同步。</p>
         </div>
       )}
@@ -282,8 +292,8 @@ export function TodoList() {
       {error && (
         <div className="p-4 bg-red-50 dark:bg-red-900/20 text-red-900 dark:text-red-100 rounded-md space-y-2">
           <p className="text-center">远程数据加载失败：{error}</p>
-          <p className="text-sm text-muted-foreground">
-            💡
+          <p className="text-sm text-muted-foreground flex items-center gap-1.5">
+            <Lightbulb className="h-4 w-4 text-amber-500" />
             别担心！您仍可以继续添加和管理待办事项，所有数据将安全地存储在本地。当网络恢复正常并成功登录后，系统会智能地帮您处理数据合并。
           </p>
         </div>
@@ -326,7 +336,7 @@ export function TodoList() {
                       onClick={clearNewTodo}
                     >
                       <span className="text-base leading-none select-none">
-                        ❌
+                        <X className="h-4 w-4" />
                       </span>
                     </Button>
                   )}
@@ -347,7 +357,7 @@ export function TodoList() {
                     whileHover={{ scale: 1.2, rotate: 15 }}
                     className="mr-2 inline-block"
                   >
-                    ➕
+                    <Plus className="h-4 w-4" />
                   </motion.span>
                   新增待办
                 </Button>

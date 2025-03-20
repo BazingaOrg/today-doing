@@ -5,6 +5,7 @@ import { useTodoStore } from "@/lib/store";
 import { UserNav } from "@/components/auth/user-nav";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FileText, Search, X } from "lucide-react";
 
 const writingAnimation = `
   @keyframes writing {
@@ -41,7 +42,9 @@ export function TopNavBar() {
           <div className="w-full max-w-[min(calc(100vw-2rem),896px)] mx-auto flex flex-col gap-4">
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold shrink-0">
-                <span className="animate-writing">📝</span>
+                <span className="animate-writing">
+                  <FileText className="h-6 w-6" />
+                </span>
               </h1>
               <div className="relative flex-grow">
                 <Input
@@ -60,7 +63,7 @@ export function TopNavBar() {
                       transition: { duration: 0.3 },
                     }}
                   >
-                    🔍
+                    <Search className="h-4 w-4" />
                   </motion.span>
                 </div>
                 <AnimatePresence>
@@ -78,7 +81,7 @@ export function TopNavBar() {
                           transition: { duration: 0.2 },
                         }}
                       >
-                        ❌
+                        <X className="h-4 w-4" />
                       </motion.span>
                     </div>
                   )}

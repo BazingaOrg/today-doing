@@ -1,6 +1,7 @@
 import { useTodoStore } from "@/lib/store";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
+import { BarChart2, CheckCircle, Circle } from "lucide-react";
 
 export function StatsDisplay() {
   const todos = useTodoStore((state) => state.todos);
@@ -28,7 +29,7 @@ export function StatsDisplay() {
         onClick={() => setFilter("all")}
       >
         <span className="inline-block group-hover:scale-125 transition-transform mr-2">
-          📊
+          <BarChart2 className="h-4 w-4" />
         </span>
         <span className="font-medium">{totalTodos}</span>
       </Badge>
@@ -42,7 +43,7 @@ export function StatsDisplay() {
         onClick={() => setFilter("completed")}
       >
         <span className="inline-block group-hover:rotate-[15deg] transition-transform mr-2">
-          ✅
+          <CheckCircle className="h-4 w-4" />
         </span>
         <span className="font-medium">{completedTodos}</span>
       </Badge>
@@ -56,7 +57,7 @@ export function StatsDisplay() {
         onClick={() => setFilter("pending")}
       >
         <span className="inline-block group-hover:rotate-[360deg] transition-transform duration-500 mr-2">
-          ⭕️
+          <Circle className="h-4 w-4" />
         </span>
         <span className="font-medium">{pendingTodos}</span>
       </Badge>

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { format } from "date-fns";
 import { zhCN } from "date-fns/locale";
+import { AlertTriangle, XCircle } from "lucide-react";
 
 interface LocalTodo {
   id: string;
@@ -110,7 +111,7 @@ export function DataMigration() {
       if (duplicateGroups.length > 0) {
         setDuplicates(duplicateGroups);
         toast({
-          title: "⚠️ 发现重复待办事项",
+          title: "发现重复待办事项",
           description: "请检查并选择如何处理重复的待办事项。",
           variant: "default",
         });
@@ -134,8 +135,8 @@ export function DataMigration() {
       localStorage.removeItem("todo-storage");
 
       toast({
-        title: "✨ 数据迁移成功",
-        description: `✅ 已成功迁移 ${localTodos.length} 个待办事项。`,
+        title: "数据迁移成功",
+        description: "已成功处理重复项并迁移数据。",
         variant: "success",
       });
 
@@ -143,7 +144,7 @@ export function DataMigration() {
       window.location.reload();
     } catch (error) {
       toast({
-        title: "❌ 迁移失败",
+        title: "迁移失败",
         description: "数据迁移过程中出现错误，请重试。",
         variant: "destructive",
       });
@@ -230,8 +231,8 @@ export function DataMigration() {
       localStorage.removeItem("todo-storage");
 
       toast({
-        title: "✨ 数据迁移成功",
-        description: "✅ 已成功处理重复项并迁移数据。",
+        title: "数据迁移成功",
+        description: "已成功处理重复项并迁移数据。",
         variant: "success",
       });
 
@@ -239,7 +240,7 @@ export function DataMigration() {
       window.location.reload();
     } catch (error) {
       toast({
-        title: "❌ 迁移失败",
+        title: "迁移失败",
         description: "处理重复项时出现错误，请重试。",
         variant: "destructive",
       });
