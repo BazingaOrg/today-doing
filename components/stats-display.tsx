@@ -31,7 +31,7 @@ export function StatsDisplay() {
         <span className="inline-block group-hover:scale-125 transition-transform mr-2">
           <BarChart2 className="h-4 w-4" />
         </span>
-        <span className="font-medium">{totalTodos}</span>
+        <span className="font-medium font-numeric">{totalTodos}</span>
       </Badge>
       <Badge
         variant="outline"
@@ -45,7 +45,7 @@ export function StatsDisplay() {
         <span className="inline-block group-hover:rotate-[15deg] transition-transform mr-2">
           <CheckCircle className="h-4 w-4" />
         </span>
-        <span className="font-medium">{completedTodos}</span>
+        <span className="font-medium font-numeric">{completedTodos}</span>
       </Badge>
       <Badge
         variant="outline"
@@ -59,7 +59,7 @@ export function StatsDisplay() {
         <span className="inline-block group-hover:rotate-[360deg] transition-transform duration-500 mr-2">
           <Circle className="h-4 w-4" />
         </span>
-        <span className="font-medium">{pendingTodos}</span>
+        <span className="font-medium font-numeric">{pendingTodos}</span>
       </Badge>
     </motion.div>
   );

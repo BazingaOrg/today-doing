@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -7,8 +6,6 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { headers, cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/lib/database.types";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Today Doing",
@@ -52,7 +49,17 @@ export default async function RootLayout({
 
   return (
     <html lang="zh" suppressHydrationWarning>
-      <body className={inter.className}>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://npm.elemecdn.com/lxgw-wenkai-webfont@1.6.0/style.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap"
+        />
+      </head>
+      <body className="font-serif font-light">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -66,5 +73,3 @@ export default async function RootLayout({
     </html>
   );
 }
-
-import "./globals.css";

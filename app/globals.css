@@ -72,8 +72,16 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-serif font-light;
+    font-family: "LXGW WenKai", serif;
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* 数字使用等宽字体显示 */
+  .font-numeric {
+    font-family: "Noto Sans", system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
   }
 }
 

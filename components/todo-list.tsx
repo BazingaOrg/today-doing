@@ -191,6 +191,21 @@ export function TodoList() {
       case "yesterday":
         return "昨日待办";
       default:
+        // 对于日期格式的标题，格式如"2023年05月12日"
+        // 提取年月日数字并添加font-numeric类
+        const yearMatch = group.match(/(\d+)年/);
+        const monthMatch = group.match(/(\d+)月/);
+        const dayMatch = group.match(/(\d+)日/);
+
+        if (yearMatch && monthMatch && dayMatch) {
+          return (
+            <>
+              <span className="font-numeric">{yearMatch[1]}</span>年
+              <span className="font-numeric">{monthMatch[1]}</span>月
+              <span className="font-numeric">{dayMatch[1]}</span>日
+            </>
+          );
+        }
         return group;
     }
   };
@@ -247,7 +262,9 @@ export function TodoList() {
         <div className="p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-medium leading-none tracking-tight">
-              {timeProgress.currentYear}年的第{timeProgress.dayOfYear}天
+              <span className="font-numeric">{timeProgress.currentYear}</span>
+              年的第
+              <span className="font-numeric">{timeProgress.dayOfYear}</span>天
             </h3>
             <p className="text-sm text-muted-foreground">
               If Not Now, Then When?
@@ -257,7 +274,7 @@ export function TodoList() {
             <div className="w-32 space-y-1">
               <p className="text-sm font-medium leading-none">今年进度</p>
               <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold tracking-tight tabular-nums">
+                <span className="text-2xl font-bold tracking-tight font-numeric">
                   {timeProgress.yearProgress.toFixed(3)}
                 </span>
                 <span className="text-sm font-medium text-muted-foreground">
@@ -270,7 +287,7 @@ export function TodoList() {
                 今日进度
               </p>
               <div className="flex items-center justify-end gap-2">
-                <span className="text-2xl font-bold tracking-tight tabular-nums">
+                <span className="text-2xl font-bold tracking-tight font-numeric">
                   {timeProgress.dayProgress.toFixed(3)}
                 </span>
                 <span className="text-sm font-medium text-muted-foreground">
@@ -387,7 +404,7 @@ export function TodoList() {
                             onMouseEnter={() => setOpenPopoverGroup(group)}
                             onMouseLeave={() => setOpenPopoverGroup(null)}
                           >
-                            <span className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors duration-200 inline-block w-[4ch] text-right tabular-nums">
+                            <span className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors duration-200 inline-block w-[4ch] text-right font-numeric">
                               {Math.round(
                                 (todos.filter((todo) => todo.completed).length /
                                   todos.length) *
@@ -435,7 +452,7 @@ export function TodoList() {
                                     <span className="text-muted-foreground">
                                       总计：
                                     </span>
-                                    <span className="font-medium">
+                                    <span className="font-medium font-numeric">
                                       {todos.length}
                                     </span>
                                   </div>
@@ -443,7 +460,7 @@ export function TodoList() {
                                     <span className="text-muted-foreground">
                                       已办：
                                     </span>
-                                    <span className="font-medium text-green-600 dark:text-green-400">
+                                    <span className="font-medium text-green-600 dark:text-green-400 font-numeric">
                                       {
                                         todos.filter((todo) => todo.completed)
                                           .length
@@ -454,7 +471,7 @@ export function TodoList() {
                                     <span className="text-muted-foreground">
                                       未办：
                                     </span>
-                                    <span className="font-medium text-orange-600 dark:text-orange-400">
+                                    <span className="font-medium text-orange-600 dark:text-orange-400 font-numeric">
                                       {
                                         todos.filter((todo) => !todo.completed)
                                           .length

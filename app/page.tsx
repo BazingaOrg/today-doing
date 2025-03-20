@@ -18,12 +18,13 @@ export default function Home() {
           <ThemeToggle />
         </div>
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          © 2024 Today Doing Application. Powered by{" "}
-          <a href="https://v0.dev" className="hover:underline">
-            v0.dev
+          © <span className="font-numeric">2024</span> Today Doing Application.
+          Powered by{" "}
+          <a href="https://v0.dev" className="hover:underline text-primary">
+            <span className="font-numeric">v0</span>.dev
           </a>{" "}
           and{" "}
-          <a href="https://cursor.sh" className="hover:underline">
+          <a href="https://cursor.sh" className="hover:underline text-primary">
             Cursor
           </a>
           .
