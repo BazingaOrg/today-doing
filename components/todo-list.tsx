@@ -42,6 +42,7 @@ export function TodoList() {
   const [newTodo, setNewTodo] = useState("");
   const [isInputExpanded, setIsInputExpanded] = useState(false);
   const [openPopoverGroup, setOpenPopoverGroup] = useState<string | null>(null);
+  const [expandedGroup, setExpandedGroup] = useState<string | null>(null);
   const {
     todos,
     addTodo,
@@ -227,6 +228,11 @@ export function TodoList() {
         try {
           await addTodo(newTodo.trim());
           setNewTodo("");
+          // 检查是否需要展开今日分组
+          const hasToday = sortedGroupTodos.some(({ group }) => group === "today");
+          if (hasToday && expandedGroup !== "today") {
+            setExpandedGroup("today");
+          }
           toast({
             title: "添加成功",
             description: "新的待办事项已添加到列表中。",
@@ -385,6 +391,8 @@ export function TodoList() {
           <Accordion
             type="single"
             collapsible
+            value={expandedGroup}
+            onValueChange={setExpandedGroup}
             defaultValue={sortedGroupTodos[0]?.group}
             className="space-y-4"
           >
@@ -408,7 +416,7 @@ export function TodoList() {
                               {Math.round(
                                 (todos.filter((todo) => todo.completed).length /
                                   todos.length) *
-                                  100
+                                100
                               )}
                               %
                             </span>
@@ -432,12 +440,11 @@ export function TodoList() {
                                       r="11"
                                       cx="14"
                                       cy="14"
-                                      strokeDasharray={`${
-                                        (todos.filter((todo) => todo.completed)
-                                          .length /
-                                          todos.length) *
+                                      strokeDasharray={`${(todos.filter((todo) => todo.completed)
+                                        .length /
+                                        todos.length) *
                                         69.115
-                                      } 69.115`}
+                                        } 69.115`}
                                     />
                                   </svg>
                                 </div>
