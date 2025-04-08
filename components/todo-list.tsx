@@ -42,7 +42,8 @@ export function TodoList() {
   const [newTodo, setNewTodo] = useState("");
   const [isInputExpanded, setIsInputExpanded] = useState(false);
   const [openPopoverGroup, setOpenPopoverGroup] = useState<string | null>(null);
-  const [expandedGroup, setExpandedGroup] = useState<string | undefined>(undefined);
+  const [expandedGroup, setExpandedGroup] = useState<string>("");
+  const [hasInitialized, setHasInitialized] = useState(false);
   const {
     todos,
     addTodo,
@@ -186,11 +187,12 @@ export function TodoList() {
   }, [sortedGroups]);
 
   useEffect(() => {
-    // 当分组数据变化时，如果当前没有展开的分组，则展开第一个分组
-    if ((!expandedGroup || expandedGroup === "") && sortedGroupTodos.length > 0) {
+    // 只在初始加载时展开第一个分组
+    if (!hasInitialized && sortedGroupTodos.length > 0) {
       setExpandedGroup(sortedGroupTodos[0].group);
+      setHasInitialized(true);
     }
-  }, [sortedGroupTodos, expandedGroup]);
+  }, [sortedGroupTodos, hasInitialized]);
 
   const getGroupTitle = (group: string) => {
     switch (group) {
