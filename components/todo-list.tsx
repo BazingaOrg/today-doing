@@ -42,7 +42,7 @@ export function TodoList() {
   const [newTodo, setNewTodo] = useState("");
   const [isInputExpanded, setIsInputExpanded] = useState(false);
   const [openPopoverGroup, setOpenPopoverGroup] = useState<string | null>(null);
-  const [expandedGroup, setExpandedGroup] = useState<string | null>(null);
+  const [expandedGroup, setExpandedGroup] = useState<string | undefined>(undefined);
   const {
     todos,
     addTodo,
@@ -184,6 +184,13 @@ export function TodoList() {
       }),
     }));
   }, [sortedGroups]);
+
+  useEffect(() => {
+    // 当分组数据变化时，如果当前没有展开的分组，则展开第一个分组
+    if ((!expandedGroup || expandedGroup === "") && sortedGroupTodos.length > 0) {
+      setExpandedGroup(sortedGroupTodos[0].group);
+    }
+  }, [sortedGroupTodos, expandedGroup]);
 
   const getGroupTitle = (group: string) => {
     switch (group) {
@@ -393,7 +400,6 @@ export function TodoList() {
             collapsible
             value={expandedGroup}
             onValueChange={setExpandedGroup}
-            defaultValue={sortedGroupTodos[0]?.group}
             className="space-y-4"
           >
             {sortedGroupTodos.map(
